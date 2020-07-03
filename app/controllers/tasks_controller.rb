@@ -1,11 +1,9 @@
 class TasksController < ApplicationController
   before_action :require_user_logged_in
-  before_action :correct_user, only: [:destroy, :show, :edit ]
+  before_action :correct_user, only: [:update, :destroy, :show, :edit ]
   
   def index
-    if logged_in?
       @tasks = current_user.tasks.order(id: :desc)
-    end
   end
   
   def new
@@ -22,10 +20,6 @@ class TasksController < ApplicationController
       flash.now[:danger] = 'Task が作成できませんでした'
       render :new
     end  
-  end
-  
-  def edit
-     @task = Task.find(params[:id])
   end
   
   def update
